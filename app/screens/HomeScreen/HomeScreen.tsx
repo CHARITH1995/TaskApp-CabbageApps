@@ -24,10 +24,11 @@ const HomeScreen: FC = () => {
     const [refresh , setRefresh] = useState(false)
 
     const setTaskChecked = (id:number) =>{
-      let itemIndex : any  = TaskList?.findIndex(item => item.id == id);
-      TaskList[itemIndex].is_checked = true;
-      checkedTaskList?.push(TaskList[itemIndex]);
-      TaskList.splice(itemIndex,1);
+      let itemIndex : any  = taskList?.findIndex(item => item.id == id);
+      taskList[itemIndex].is_checked = true;
+      checkedTaskList?.push(taskList[itemIndex]);
+      taskList.splice(itemIndex,1);
+      
     }
 
     useEffect(()=>{
@@ -38,28 +39,28 @@ const HomeScreen: FC = () => {
    
     const setTaskUnChecked = (id:number) =>{
 
-      let itemIndex : any  = CheckedTaskList?.findIndex(item => item.id == id);
-      CheckedTaskList[itemIndex].is_checked = false;
-      taskList?.push(CheckedTaskList[itemIndex]);
-      CheckedTaskList.splice(itemIndex,1);
+      let itemIndex : any  = checkedTaskList?.findIndex(item => item.id == id);
+      checkedTaskList[itemIndex].is_checked = false;
+      taskList?.push(checkedTaskList[itemIndex]);
+      checkedTaskList.splice(itemIndex,1);
      
   }
 
   const refreshList = () =>{
-    console.warn("here")
     return true;
   }
 
 
   const removeTask = (id:number,is_checked:Boolean) =>{
     if(!is_checked){
-      let itemIndex : any  = TaskList?.findIndex(item => item.id == id);
-      TaskList.splice(itemIndex,1);
+      let itemIndex : any  = taskList?.findIndex(item => item.id == id);
+      taskList.splice(itemIndex,1);
+      console.warn(taskList)
     }else{
-      let itemIndex : any  = CheckedTaskList?.findIndex(item => item.id == id);
-      CheckedTaskList.slice(itemIndex,1);
+      let itemIndex : any  = checkedTaskList?.findIndex(item => item.id == id);
+      checkedTaskList.slice(itemIndex,1);
     }
-   
+    
 
   }
 
@@ -71,7 +72,7 @@ const HomeScreen: FC = () => {
         <View>
         <Text style={styles.headerSubTitle}>Tasks</Text>
           <FlatList
-            data={TaskList}
+            data={taskList}
             renderItem={({item, index}) => (
               <TaskComponent
                 id={item.id}
@@ -83,13 +84,14 @@ const HomeScreen: FC = () => {
                 removeTask = {removeTask}
               />
             )}
+            extraData = {refreshList}
 
           />
         </View>
         <View style = {{marginTop:cardHeight * 0.5}}>
         <Text style={styles.headerSubTitle}>Completed</Text>
           <FlatList
-            data={CheckedTaskList}
+            data={checkedTaskList}
             renderItem={({item, index}) => (
               <TaskComponent
                 id={item.id}
@@ -101,6 +103,7 @@ const HomeScreen: FC = () => {
                 removeTask = {removeTask}
               />
             )}
+            extraData = {checkedTaskList}
           />
         
         </View>
