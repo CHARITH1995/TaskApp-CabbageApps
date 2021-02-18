@@ -7,7 +7,8 @@ let cardHeight = Math.round((dimensions.height * 1) / 15);
 let carWidth = dimensions.width;
 
 interface Props {
-    title : String
+    title : String;
+    onPress : ()=>void
 }
 
 const ButtonBlue : FC<Props> = (Props) =>{
@@ -17,7 +18,7 @@ const ButtonBlue : FC<Props> = (Props) =>{
         <View style={styles.buttonContainer}>
         <TouchableOpacity
           style={styles.buttonStyle}
-          //onPress={this.props.onPress}
+          onPress={Props.onPress}
           >
           <View style={styles.textContainer}>
     <Text style={styles.textField}>{Props.title}</Text>

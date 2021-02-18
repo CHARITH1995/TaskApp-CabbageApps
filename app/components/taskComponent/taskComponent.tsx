@@ -1,7 +1,7 @@
 import React, {FC, useState, useEffect} from 'react';
 import {View, Text, Dimensions, Image, StyleSheet , TouchableOpacity} from 'react-native';
 import {RadioButton} from 'react-native-paper';
-import {CLOCK, CHECKED} from '../../../images/index';
+import {CLOCK, CHECKED , DELETE} from '../../../images/index';
 import { Task, TaskList , CheckedTaskList} from '../../../data';
 
 const screenWidth = Math.round(Dimensions.get('window').width);
@@ -10,29 +10,16 @@ const screenHeight = Math.round(Dimensions.get('window').height);
 interface Props {
     id:number;
   name: string;
-  startTime: string;
-  endTime: string;
-  date: string;
+  startDate: string;
   is_checked: Boolean;
   setTaskChecked : (id : number) =>void
   setTaskUnChecked : (id: number) =>void
+  removeTask : (id:number, is_checked:Boolean) => void
 }
 
 const TaskComponent: FC<Props> = (Props) => {
   const [checked, setChecked] = useState<string>('false');
  
-
-
-  // const checkMeeting = () => {
-  //   if (checked == 'false') {
-  //     setChecked('true');
-  //     Props.setTaskUnChecked(Props.id);
-  //   } else {
-  //     setChecked('false');
-  //     Props.setTaskUnChecked(Props.id);
-  //   }
-  // };
-
 
 
   return (
@@ -43,10 +30,10 @@ const TaskComponent: FC<Props> = (Props) => {
             <Text style={[Props.is_checked ? styles.slidertextChecked : styles.slidertext]}>{Props.name}</Text>
             <View style={styles.imageContainer}>
               <Image source={CLOCK} />
-              <Text style={styles.slidertext_artist}>02.30 pm - 03.45 pm </Text>
+  <Text style={styles.slidertext_artist}>{Props.startDate}</Text>
             </View>
           </View>
-          <View>
+          <View style = {{flexDirection:'column'}}>
             {!Props.is_checked ? (
               <View>
                 <RadioButton
@@ -62,6 +49,11 @@ const TaskComponent: FC<Props> = (Props) => {
                 </TouchableOpacity>
               </View>
             )}
+            <View>
+                <TouchableOpacity onPress = {()=>Props.removeTask(Props.id,Props.is_checked)}>
+                <Image source={DELETE} style={styles.removeIconstyle}  />
+                </TouchableOpacity>
+              </View>
           </View>
         </View>
       </View>
@@ -118,4 +110,10 @@ const styles = StyleSheet.create({
     height: screenWidth * 0.06,
     width: screenWidth * 0.06,
   },
+  removeIconstyle:{
+    height: screenWidth * 0.09,
+    width: screenWidth * 0.09,
+    marginTop:screenHeight * 0.01
+    
+  }
 });

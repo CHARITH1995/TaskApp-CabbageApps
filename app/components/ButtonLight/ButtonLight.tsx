@@ -13,6 +13,7 @@ let carWidth = dimensions.width;
 
 interface Props {
   title: String;
+  onPress : () => void
 }
 
 const ButtonLight: FC<Props> = (Props) => {
@@ -20,7 +21,7 @@ const ButtonLight: FC<Props> = (Props) => {
     <View style={styles.buttonContainer}>
       <TouchableOpacity
         style={styles.buttonStyle}
-        //onPress={this.props.onPress}
+        onPress={Props.onPress}
       >
         <View style={styles.textContainer}>
           <Text style={styles.textField}>{Props.title}</Text>

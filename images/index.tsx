@@ -5,3 +5,4 @@ export const SELECTHOME =  require('./images/selectHome.png');
 export const SELECTPLUS =  require('./images/selectPlus.png');
 export const USER =  require('./images/user.jpg');
 export const CHECKED =  require('./images/checked.png');
+export const DELETE =  require('./images/delete.png');

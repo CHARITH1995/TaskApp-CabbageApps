@@ -24,69 +24,83 @@ const HomeScreen: FC = () => {
     const [refresh , setRefresh] = useState(false)
 
     const setTaskChecked = (id:number) =>{
-      let itemIndex : any  = taskList?.findIndex(item => item.id == id);
-      taskList[itemIndex].is_checked = true;
-      checkedTaskList?.push(taskList[itemIndex]);
-      taskList.splice(itemIndex,1);
-      
+      let itemIndex : any  = TaskList?.findIndex(item => item.id == id);
+      TaskList[itemIndex].is_checked = true;
+      checkedTaskList?.push(TaskList[itemIndex]);
+      TaskList.splice(itemIndex,1);
     }
 
     useEffect(()=>{
         setTaskList(TaskList);
         setCheckedTaskList(CheckedTaskList);
-    },[taskList,checkedTaskList])
+    },[])
 
    
     const setTaskUnChecked = (id:number) =>{
 
-      let itemIndex : any  = checkedTaskList?.findIndex(item => item.id == id);
-      checkedTaskList[itemIndex].is_checked = false;
-      taskList?.push(checkedTaskList[itemIndex]);
-      checkedTaskList.splice(itemIndex,1);
+      let itemIndex : any  = CheckedTaskList?.findIndex(item => item.id == id);
+      CheckedTaskList[itemIndex].is_checked = false;
+      taskList?.push(CheckedTaskList[itemIndex]);
+      CheckedTaskList.splice(itemIndex,1);
      
+  }
+
+  const refreshList = () =>{
+    console.warn("here")
+    return true;
+  }
+
+
+  const removeTask = (id:number,is_checked:Boolean) =>{
+    if(!is_checked){
+      let itemIndex : any  = TaskList?.findIndex(item => item.id == id);
+      TaskList.splice(itemIndex,1);
+    }else{
+      let itemIndex : any  = CheckedTaskList?.findIndex(item => item.id == id);
+      CheckedTaskList.slice(itemIndex,1);
+    }
+   
+
   }
 
   return (
     <ScrollView style = {{height:cardHeight * 15  }} contentContainerStyle={{flexGrow: 1}}> 
     <View style={styles.homeContainer}>
       <HeaderComponent />
+      
         <View>
         <Text style={styles.headerSubTitle}>Tasks</Text>
           <FlatList
-            data={taskList}
+            data={TaskList}
             renderItem={({item, index}) => (
               <TaskComponent
                 id={item.id}
                 name={item.name}
-                startTime={item.startTime}
-                endTime={item.endTime}
-                date={item.date}
+                startDate={item.startDate}
                 is_checked={item.is_checked}
                 setTaskChecked = {setTaskChecked}
                 setTaskUnChecked = {setTaskUnChecked}
+                removeTask = {removeTask}
               />
             )}
-            extraData = {taskList}
 
           />
         </View>
         <View style = {{marginTop:cardHeight * 0.5}}>
         <Text style={styles.headerSubTitle}>Completed</Text>
           <FlatList
-            data={checkedTaskList}
+            data={CheckedTaskList}
             renderItem={({item, index}) => (
               <TaskComponent
                 id={item.id}
                 name={item.name}
-                startTime={item.startTime}
-                endTime={item.endTime}
-                date={item.date}
+                startDate={item.startDate}
                 is_checked={item.is_checked}
                 setTaskUnChecked = {setTaskUnChecked}
                 setTaskChecked = {setTaskChecked}
+                removeTask = {removeTask}
               />
             )}
-            extraData = {checkedTaskList}
           />
         
         </View>
