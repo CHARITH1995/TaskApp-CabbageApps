@@ -10,6 +10,10 @@ import ButtonBlue from '../ButtonBlue/ButtonBlue';
 import ButtonLight from '../ButtonLight/ButtonLight';
 
 const headerComponent: FC = () => {
+
+  const onPress = () =>{
+
+  }
   return (
     <View style = {styles.headerContainer}>
       <View style={styles.headerComponent}>
@@ -24,10 +28,12 @@ const headerComponent: FC = () => {
       <View>
         <View style = {styles.buttonContainer}>
         <ButtonBlue 
-            title = "My Day"        
+            title = "My Day"  
+            onPress = {onPress}      
         />
         <ButtonLight 
-            title = "Important"        
+            title = "Important" 
+            onPress = {onPress}        
         />
         </View>
       </View>
